@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BudgetWise.Views.TransactionFormPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False"
+    BackgroundColor="#101713">
+
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout
+                Padding="20,24,20,24"
+                Spacing="20"
+                MaximumWidthRequest="540"
+                HorizontalOptions="Fill">
+
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14">
+                    <Border BackgroundColor="#C9F27A" Stroke="#050806" StrokeThickness="3"
+                            StrokeShape="Rectangle" WidthRequest="46" HeightRequest="46">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnCancelClicked" />
+                        </Border.GestureRecognizers>
+                        <Path Data="M19,12 L5,12 M5,12 L12,5 M5,12 L12,19"
+                              Stroke="#101713" StrokeThickness="2.5"
+                              StrokeLineCap="Round" StrokeLineJoin="Round"
+                              WidthRequest="20" HeightRequest="20"
+                              HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+
+                    <VerticalStackLayout Grid.Column="1" Spacing="4">
+                        <Label
+                            Text="New transaction"
+                            FontSize="27"
+                            FontAttributes="Bold"
+                            TextColor="#F2F4EC" />
+                        <Label
+                            Text="Keep your finances organized"
+                            FontSize="13"
+                            TextColor="#A7B4AA" />
+                    </VerticalStackLayout>
+                </Grid>
+
+                <Border
+                    BackgroundColor="#18251F"
+                    Stroke="#050806"
+                    StrokeThickness="3"
+                    StrokeShape="Rectangle"
+                    Padding="20">
+                    <VerticalStackLayout Spacing="18">
+                        <VerticalStackLayout Spacing="7">
+                            <Label Text="TRANSACTION TYPE" FontAttributes="Bold" TextColor="#F2F4EC" />
+                            <Picker
+                                x:Name="TypePicker"
+                                Title="Choose type"
+                                TextColor="#F2F4EC"
+                                TitleColor="#A7B4AA"
+                                SelectedIndexChanged="OnTypeChanged" />
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="7">
+                            <Label Text="AMOUNT (RON)" FontAttributes="Bold" TextColor="#F2F4EC" />
+                            <Border
+                                BackgroundColor="#101713"
+                                Stroke="#050806"
+                                StrokeThickness="2"
+                                StrokeShape="Rectangle"
+                                Padding="12,3">
+                                <Entry
+                                    x:Name="AmountEntry"
+                                    Placeholder="0.00"
+                                    Keyboard="Numeric"
+                                    FontSize="22"
+                                    TextColor="#F2F4EC"
+                                    PlaceholderColor="#718176" />
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="7">
+                            <Label Text="CATEGORY" FontAttributes="Bold" TextColor="#F2F4EC" />
+                            <Picker
+                                x:Name="CategoryPicker"
+                                Title="Select category"
+                                ItemDisplayBinding="{Binding Name}"
+                                TextColor="#F2F4EC"
+                                TitleColor="#A7B4AA" />
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="7">
+                            <Label Text="DATE" FontAttributes="Bold" TextColor="#F2F4EC" />
+                            <DatePicker
+                                x:Name="TransactionDatePicker"
+                                Format="dd MMM yyyy"
+                                TextColor="#F2F4EC" />
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="7">
+                            <Label Text="DESCRIPTION" FontAttributes="Bold" TextColor="#F2F4EC" />
+                            <Border
+                                BackgroundColor="#101713"
+                                Stroke="#050806"
+                                StrokeThickness="2"
+                                StrokeShape="Rectangle"
+                                Padding="12">
+                                <Editor
+                                    x:Name="DescriptionEditor"
+                                    Placeholder="What was this transaction for?"
+                                    PlaceholderColor="#718176"
+                                    TextColor="#F2F4EC"
+                                    AutoSize="TextChanges"
+                                    MinimumHeightRequest="80" />
+                            </Border>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Border
+            Grid.Row="1"
+            BackgroundColor="#101713"
+            Stroke="#050806"
+            StrokeThickness="3"
+            Padding="20,12,20,20">
+            <Button
+                x:Name="SaveButton"
+                Text="Save transaction"
+                BackgroundColor="#C9F27A"
+                TextColor="#101713"
+                BorderColor="#050806"
+                BorderWidth="3"
+                FontAttributes="Bold"
+                FontSize="15"
+                CornerRadius="0"
+                HeightRequest="54"
+                Clicked="OnSaveClicked" />
+        </Border>
+    </Grid>
+</ContentPage>

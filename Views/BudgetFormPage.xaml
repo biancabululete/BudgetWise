@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BudgetWise.Views.BudgetFormPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Budget"
+    BackgroundColor="#101713"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False">
+
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="20,24,20,24" Spacing="20"
+                                 MaximumWidthRequest="540" HorizontalOptions="Fill">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14">
+                    <Border BackgroundColor="#C9F27A" Stroke="#050806" StrokeThickness="3"
+                            StrokeShape="Rectangle" WidthRequest="46" HeightRequest="46">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnCancelClicked" />
+                        </Border.GestureRecognizers>
+                        <Path Data="M19,12 L5,12 M5,12 L12,5 M5,12 L12,19"
+                              Stroke="#101713" StrokeThickness="2.5"
+                              StrokeLineCap="Round" StrokeLineJoin="Round"
+                              WidthRequest="20" HeightRequest="20"
+                              HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" Spacing="4">
+                        <Label x:Name="PageTitleLabel" Text="CREATE BUDGET" FontSize="27"
+                               FontAttributes="Bold" TextColor="#F2F4EC" />
+                        <Label Text="Set a monthly category limit" FontSize="13" TextColor="#A7B4AA" />
+                    </VerticalStackLayout>
+                </Grid>
+
+                <Border BackgroundColor="#18251F" Stroke="#050806" StrokeThickness="3"
+                        StrokeShape="Rectangle" Padding="20">
+                    <VerticalStackLayout Spacing="18">
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="CATEGORY" FontAttributes="Bold" TextColor="#F2F4EC" />
+                            <Picker x:Name="CategoryPicker" Title="Select expense category"
+                                    ItemDisplayBinding="{Binding Name}"
+                                    TextColor="#F2F4EC" TitleColor="#A7B4AA" />
+                        </VerticalStackLayout>
+
+                        <BoxView HeightRequest="2" BackgroundColor="#050806" />
+
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="BUDGET MONTH" FontAttributes="Bold" TextColor="#F2F4EC" />
+                            <DatePicker x:Name="BudgetDatePicker" Format="MMMM yyyy"
+                                        TextColor="#F2F4EC" />
+                        </VerticalStackLayout>
+
+                        <BoxView HeightRequest="2" BackgroundColor="#050806" />
+
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="MONTHLY LIMIT (RON)" FontAttributes="Bold" TextColor="#F2F4EC" />
+                            <Border BackgroundColor="#101713" Stroke="#050806" StrokeThickness="2"
+                                    StrokeShape="Rectangle" Padding="12,4">
+                                <Entry x:Name="LimitEntry" Placeholder="e.g. 1200.00"
+                                       Keyboard="Numeric" FontSize="23" TextColor="#F2F4EC"
+                                       PlaceholderColor="#718176" />
+                            </Border>
+                            <Label Text="The limit applies to this category and month only."
+                                   FontSize="12" TextColor="#A7B4AA" />
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border BackgroundColor="#20352C" Stroke="#050806" StrokeThickness="3"
+                        StrokeShape="Rectangle" Padding="16">
+                    <VerticalStackLayout Spacing="7">
+                        <Label Text="HOW IT WORKS" FontSize="14" FontAttributes="Bold" TextColor="#C9F27A" />
+                        <Label Text="Expenses saved in this category are compared automatically with your monthly limit."
+                               FontSize="12" TextColor="#F2F4EC" LineBreakMode="WordWrap" />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Border Grid.Row="1" BackgroundColor="#101713" Stroke="#050806" StrokeThickness="3"
+                Padding="20,12,20,20">
+            <Button x:Name="SaveBudgetButton" Text="SAVE BUDGET"
+                    BackgroundColor="#C9F27A" TextColor="#101713"
+                    BorderColor="#050806" BorderWidth="3" CornerRadius="0"
+                    HeightRequest="54" FontAttributes="Bold" Clicked="OnSaveBudgetClicked" />
+        </Border>
+    </Grid>
+</ContentPage>

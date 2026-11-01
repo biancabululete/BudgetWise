@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BudgetWise.Views.DashboardPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:BudgetWise.Controls"
+    Title="Home"
+    BackgroundColor="#101713"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False">
+
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView Grid.Row="0" VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout Padding="20,26,20,24" Spacing="20"
+                                 MaximumWidthRequest="540" HorizontalOptions="Fill">
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="BUDGETWISE" FontSize="11" FontAttributes="Bold"
+                               CharacterSpacing="2" TextColor="#C9F27A" />
+                        <Label Text="Overview" FontSize="29" FontAttributes="Bold" TextColor="#F2F4EC" />
+                        <Label Text="Your money, at a glance" FontSize="13" TextColor="#A7B4AA" />
+                    </VerticalStackLayout>
+                    <Border Grid.Column="1" BackgroundColor="#20352C" Stroke="#050806"
+                            StrokeThickness="3" StrokeShape="Rectangle"
+                            WidthRequest="46" HeightRequest="46">
+                        <Label Text="BW" FontSize="13" FontAttributes="Bold" TextColor="#C9F27A"
+                               HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                </Grid>
+
+                <Border BackgroundColor="#20352C" Stroke="#050806" StrokeThickness="3"
+                        StrokeShape="Rectangle" Padding="20">
+                    <VerticalStackLayout Spacing="17">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="TOTAL BALANCE" FontSize="13" FontAttributes="Bold" TextColor="#A7B4AA" />
+                            <Border Grid.Column="1" BackgroundColor="#C9F27A" Stroke="#050806" StrokeThickness="2"
+                                    StrokeShape="Rectangle" Padding="10,4">
+                                <Label Text="RON" FontSize="11" FontAttributes="Bold" TextColor="#101713" />
+                            </Border>
+                        </Grid>
+                        <Label x:Name="BalanceLabel" Text="0,00 RON" FontSize="34" FontAttributes="Bold"
+                               TextColor="#F2F4EC" MaxLines="1" LineBreakMode="TailTruncation" />
+                        <BoxView HeightRequest="2" BackgroundColor="#050806" />
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                            <VerticalStackLayout Spacing="6">
+                                <Label Text="INCOME THIS MONTH" FontSize="11" FontAttributes="Bold" TextColor="#A7B4AA" />
+                                <Label x:Name="IncomeLabel" Text="+0,00 RON" FontSize="18"
+                                        FontAttributes="Bold" TextColor="#7CF7E8"
+                                       MaxLines="1" LineBreakMode="TailTruncation" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="1" Spacing="6">
+                                <Label Text="EXPENSES THIS MONTH" FontSize="11" FontAttributes="Bold" TextColor="#A7B4AA" />
+                                <Label x:Name="ExpensesLabel" Text="-0,00 RON" FontSize="18"
+                                       FontAttributes="Bold" TextColor="#D56E75"
+                                       MaxLines="1" LineBreakMode="TailTruncation" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                    <Button Grid.Column="0" Text="+ EXPENSE" FontSize="14" FontAttributes="Bold"
+                            BackgroundColor="#C9F27A" TextColor="#101713" BorderColor="#050806" BorderWidth="3"
+                            HeightRequest="52" CornerRadius="0" Clicked="OnAddExpenseClicked" />
+                    <Button Grid.Column="1" Text="+ INCOME" FontSize="14" FontAttributes="Bold"
+                            BackgroundColor="#7CF7E8" TextColor="#101713" BorderColor="#050806" BorderWidth="3"
+                            HeightRequest="52" CornerRadius="0" Clicked="OnAddIncomeClicked" />
+                </Grid>
+
+                <Grid ColumnDefinitions="*,Auto">
+                    <Label Text="THIS MONTH" FontSize="19" FontAttributes="Bold" TextColor="#F2F4EC" />
+                    <Label Grid.Column="1" Text="BUDGET OVERVIEW" FontSize="11" FontAttributes="Bold" TextColor="#A7B4AA"
+                           VerticalOptions="Center" />
+                </Grid>
+                <Border BackgroundColor="#18251F" Stroke="#050806" StrokeThickness="3"
+                        StrokeShape="Rectangle" Padding="19">
+                    <VerticalStackLayout Spacing="14">
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                            <VerticalStackLayout Spacing="5">
+                                <Label Text="MONTHLY SPENDING" FontSize="11" FontAttributes="Bold" TextColor="#A7B4AA" />
+                                <Label x:Name="BudgetAmountLabel" Text="No budget configured"
+                                        FontSize="17" FontAttributes="Bold" TextColor="#F2F4EC"
+                                       LineBreakMode="WordWrap" />
+                            </VerticalStackLayout>
+                            <Label x:Name="BudgetPercentLabel" Grid.Column="1" Text="—"
+                                    FontSize="14" FontAttributes="Bold" TextColor="#C9F27A"
+                                   VerticalOptions="Center" />
+                        </Grid>
+                        <ProgressBar x:Name="BudgetProgress" Progress="0" ProgressColor="#C9F27A"
+                                      BackgroundColor="#34443A" HeightRequest="7" />
+                        <Label x:Name="BudgetRemainingLabel" Text="Create a budget to track your spending"
+                                FontSize="12" TextColor="#A7B4AA" />
+                        <BoxView HeightRequest="2" BackgroundColor="#050806" />
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="SAVINGS RATE" FontSize="11" FontAttributes="Bold" TextColor="#A7B4AA" />
+                            <Label x:Name="SavingsRateLabel" Grid.Column="1" Text="—"
+                                    FontSize="15" FontAttributes="Bold" TextColor="#7CF7E8" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Grid ColumnDefinitions="*,Auto">
+                    <Label Text="RECENT ACTIVITY" FontSize="19" FontAttributes="Bold" TextColor="#F2F4EC" />
+                    <Label Grid.Column="1" Text="SEE ALL →" FontSize="12" FontAttributes="Bold" TextColor="#C9F27A"
+                           VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnSeeAllTapped" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </Grid>
+                <Border BackgroundColor="#18251F" Stroke="#050806" StrokeThickness="3"
+                        StrokeShape="Rectangle" Padding="17">
+                    <VerticalStackLayout Spacing="14">
+                        <Label x:Name="NoTransactionsLabel" Text="NO TRANSACTIONS YET" FontSize="14"
+                               FontAttributes="Bold" TextColor="#A7B4AA" HorizontalTextAlignment="Center" IsVisible="True" />
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding RecentTransactions}" Spacing="14">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnDefinitions="42,*" ColumnSpacing="12">
+                                        <Border BackgroundColor="{Binding TypeColor}" Stroke="#050806"
+                                                StrokeThickness="2" StrokeShape="Rectangle"
+                                                WidthRequest="42" HeightRequest="42"
+                                                HorizontalOptions="Center" VerticalOptions="Center" />
+                                        <VerticalStackLayout Grid.Column="1" Spacing="4">
+                                            <Label Text="{Binding Title}" FontSize="14" FontAttributes="Bold"
+                                                   TextColor="#F2F4EC" MaxLines="1" LineBreakMode="TailTruncation" />
+                                            <Label Text="{Binding Subtitle}" FontSize="11" TextColor="#A7B4AA"
+                                                   MaxLines="1" LineBreakMode="TailTruncation" />
+                                            <Label Text="{Binding AmountText}" FontSize="14" FontAttributes="Bold"
+                                                   TextColor="{Binding AmountColor}" />
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <controls:BottomNavigation Grid.Row="1" ActiveTab="home" />
+    </Grid>
+</ContentPage>

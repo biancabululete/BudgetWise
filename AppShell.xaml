@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Shell
+    x:Class="BudgetWise.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:BudgetWise.Views"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.NavBarIsVisible="False">
+    <TabBar>
+        <ShellContent Title="Home" Route="home" Shell.TabBarIsVisible="False"
+                      ContentTemplate="{DataTemplate views:DashboardPage}" />
+        <ShellContent Title="Activity" Route="activity" Shell.TabBarIsVisible="False"
+                      ContentTemplate="{DataTemplate views:TransactionsPage}" />
+        <ShellContent Title="Budgets" Route="budgets" Shell.TabBarIsVisible="False"
+                      ContentTemplate="{DataTemplate views:BudgetsPage}" />
+        <ShellContent Title="Stats" Route="stats" Shell.TabBarIsVisible="False"
+                      ContentTemplate="{DataTemplate views:StatisticsPage}" />
+    </TabBar>
+</Shell>
