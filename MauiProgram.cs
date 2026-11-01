@@ -22,6 +22,13 @@ public static class MauiProgram
 #endif
 
 		builder.Services.AddSingleton<DatabaseService>();
+		builder.Services.AddSingleton<CurrencyService>(_ =>
+			new CurrencyService(new HttpClient
+			{
+				BaseAddress = new Uri("https://api.frankfurter.dev/"),
+				Timeout = TimeSpan.FromSeconds(12)
+			}));
+		builder.Services.AddTransient<CurrencyConverterPage>();
 		builder.Services.AddTransient<DashboardPage>();
 		builder.Services.AddTransient<TransactionsPage>();
 		builder.Services.AddTransient<TransactionFormPage>();

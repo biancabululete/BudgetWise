@@ -162,6 +162,11 @@ public partial class DashboardPage : ContentPage
         await Shell.Current.GoToAsync(
             $"{nameof(TransactionFormPage)}?type=Income");
     }
+
+    private async void OnOpenConverterTapped(object sender, TappedEventArgs e)
+    {
+        await Shell.Current.GoToAsync(nameof(CurrencyConverterPage));
+    }
 }
 
 public class DashboardRecentItem
