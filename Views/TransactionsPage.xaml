@@ -47,7 +47,7 @@
                         VerticalScrollBarVisibility="Never">
             <CollectionView.EmptyView>
                 <VerticalStackLayout Padding="20,60" Spacing="12" HorizontalOptions="Center">
-                    <Image Source="empty_wallet" WidthRequest="96" HeightRequest="96"
+                    <Image Source="empty_wallet.png" WidthRequest="96" HeightRequest="96"
                            SemanticProperties.Description="Empty wallet" />
                     <Label Text="NO TRANSACTIONS FOUND" FontSize="19" FontAttributes="Bold"
                            TextColor="#F2F4EC" HorizontalTextAlignment="Center" />

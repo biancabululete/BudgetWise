@@ -20,7 +20,7 @@
                         <Label Text="Overview" FontSize="29" FontAttributes="Bold" TextColor="#F2F4EC" />
                         <Label Text="Your money, at a glance" FontSize="13" TextColor="#A7B4AA" />
                     </VerticalStackLayout>
-                    <Image Grid.Column="1" Source="bw_logo" WidthRequest="46" HeightRequest="46"
+                    <Image Grid.Column="1" Source="bw_logo.png" WidthRequest="46" HeightRequest="46"
                            SemanticProperties.Description="BudgetWise logo" />
                 </Grid>
 

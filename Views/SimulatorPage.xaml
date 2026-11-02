@@ -29,7 +29,7 @@
                     <Label Text="Plan your savings" FontSize="22" FontAttributes="Bold"
                            TextColor="#F2F4EC" />
                 </VerticalStackLayout>
-                <Image Grid.Column="2" Source="cat_income" WidthRequest="30" HeightRequest="30"
+                <Image Grid.Column="2" Source="cat_income.png" WidthRequest="30" HeightRequest="30"
                        VerticalOptions="Center" SemanticProperties.Description="Growth chart" />
             </Grid>
 

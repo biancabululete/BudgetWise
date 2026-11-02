@@ -139,7 +139,7 @@ public partial class WrappedPage : ContentPage
         var cards = new List<WrappedCard>
         {
             new("BUDGETWISE WRAPPED", monthName, "Your money, month in review",
-                "Tap to continue  →", "bw_logo",
+                "Tap to continue  →", "bw_logo.png",
                 Color.FromArgb("#20352C"), Color.FromArgb("#C9F27A"))
         };
 
@@ -166,7 +166,7 @@ public partial class WrappedPage : ContentPage
         else
         {
             cards.Add(new("YOUR TOP CATEGORY", "—", "No expenses this month", "Nothing to rank yet",
-                "cat_other", Color.FromArgb("#2F2A45"), Color.FromArgb("#C0A0EF")));
+                "cat_other.png", Color.FromArgb("#2F2A45"), Color.FromArgb("#C0A0EF")));
         }
 
         // Priciest day.
@@ -194,7 +194,7 @@ public partial class WrappedPage : ContentPage
         else
         {
             cards.Add(new("YOUR PRICIEST DAY", "—", "No expenses this month", "A very quiet month",
-                "cat_shopping", Color.FromArgb("#4A2A2E"), Color.FromArgb("#F08B8F")));
+                "cat_shopping.png", Color.FromArgb("#4A2A2E"), Color.FromArgb("#F08B8F")));
         }
 
         // Savings rate.
@@ -207,14 +207,14 @@ public partial class WrappedPage : ContentPage
                 : "You spent more than you earned this month.";
             cards.Add(new(
                 "YOU SAVED", $"{rate:0}%", $"{Money(income)} in · {Money(spent)} out", verdict,
-                "cat_salary",
+                "cat_salary.png",
                 Color.FromArgb("#1E3B3A"), Color.FromArgb("#7CF7E8"),
                 rate, value => $"{value:0}%", Math.Clamp(rate / 100.0, 0, 1)));
         }
         else
         {
             cards.Add(new("YOU SAVED", "—", "No income recorded this month", "Add an income to see your savings rate",
-                "cat_salary", Color.FromArgb("#1E3B3A"), Color.FromArgb("#7CF7E8")));
+                "cat_salary.png", Color.FromArgb("#1E3B3A"), Color.FromArgb("#7CF7E8")));
         }
 
         // Versus the previous month.
@@ -235,7 +235,7 @@ public partial class WrappedPage : ContentPage
                     ? $"You spent {Money(difference)} less than in {previousName}"
                     : $"You spent {Money(difference)} more than in {previousName}",
                 spent <= previousExpenses ? "Nice — spending went down." : "Spending went up this month.",
-                spent <= previousExpenses ? "trend_down" : "cat_income",
+                spent <= previousExpenses ? "trend_down.png" : "cat_income.png",
                 Color.FromArgb("#3A3A22"), Color.FromArgb("#C9F27A"),
                 change, value => $"{(value > 0 ? "+" : string.Empty)}{value:0}%"));
         }
@@ -243,7 +243,7 @@ public partial class WrappedPage : ContentPage
         {
             cards.Add(new($"COMPARED TO {previousName.ToUpperInvariant()}", "—",
                 $"No expenses recorded in {previousName}", "Nothing to compare with yet",
-                "cat_income", Color.FromArgb("#3A3A22"), Color.FromArgb("#C9F27A")));
+                "cat_income.png", Color.FromArgb("#3A3A22"), Color.FromArgb("#C9F27A")));
         }
 
         // Summary.
@@ -260,7 +260,7 @@ public partial class WrappedPage : ContentPage
 
         cards.Add(new(
             "THE WHOLE MONTH", $"{monthTransactions.Count}", $"transactions · about {Money(spent / days)} spent per day",
-            $"Your costliest weekday: {weekday}.  Tap to finish", "bw_logo",
+            $"Your costliest weekday: {weekday}.  Tap to finish", "bw_logo.png",
             Color.FromArgb("#20352C"), Color.FromArgb("#C9F27A"),
             monthTransactions.Count, value => $"{value:0}"));
 
@@ -269,7 +269,7 @@ public partial class WrappedPage : ContentPage
 
     private static WrappedCard EmptyCard() => new(
         "BUDGETWISE WRAPPED", "NO DATA YET", "Add some transactions first",
-        "Or load the demo data on the Home page", "bw_logo",
+        "Or load the demo data on the Home page", "bw_logo.png",
         Color.FromArgb("#20352C"), Color.FromArgb("#C9F27A"));
 
     private async Task ShowCardAsync(int index)
@@ -292,7 +292,7 @@ public partial class WrappedPage : ContentPage
         DetailLabel.Text = card.Detail;
 
         IconImage.Source = card.Icon;
-        bool isLogo = card.Icon == "bw_logo";
+        bool isLogo = card.Icon == "bw_logo.png";
         IconBadge.BackgroundColor = isLogo ? Colors.Transparent : card.Accent;
         IconBadge.StrokeThickness = isLogo ? 0 : 3;
         IconBadge.Padding = isLogo ? 0 : 24;

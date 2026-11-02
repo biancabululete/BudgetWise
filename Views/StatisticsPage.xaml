@@ -19,7 +19,7 @@
                         <Label Text="STATISTICS" FontSize="28" FontAttributes="Bold" TextColor="#F2F4EC" />
                         <Label Text="Real insights from your transactions" FontSize="13" TextColor="#A7B4AA" />
                     </VerticalStackLayout>
-                    <Image Grid.Column="1" Source="bw_logo" WidthRequest="46" HeightRequest="46"
+                    <Image Grid.Column="1" Source="bw_logo.png" WidthRequest="46" HeightRequest="46"
                            VerticalOptions="Start" SemanticProperties.Description="BudgetWise logo" />
                 </Grid>
 

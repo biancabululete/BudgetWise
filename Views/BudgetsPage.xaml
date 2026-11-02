@@ -63,7 +63,7 @@
                         SelectionMode="None" VerticalScrollBarVisibility="Never">
             <CollectionView.EmptyView>
                 <VerticalStackLayout Padding="20,50" Spacing="10" HorizontalOptions="Center">
-                    <Image Source="empty_wallet" WidthRequest="96" HeightRequest="96"
+                    <Image Source="empty_wallet.png" WidthRequest="96" HeightRequest="96"
                            SemanticProperties.Description="Empty wallet" />
                     <Label Text="NO BUDGETS YET" FontSize="19" FontAttributes="Bold"
                            TextColor="#F2F4EC" HorizontalTextAlignment="Center" />
