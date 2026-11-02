@@ -24,7 +24,7 @@ public partial class DashboardPage : ContentPage
         HideAmountsSwitch.IsToggled = _hideAmounts;
     }
 
-    private async void OnHideAmountsToggled(object sender, ToggledEventArgs e)
+    private async void OnHideAmountsToggled(object? sender, ToggledEventArgs e)
     {
         if (_hideAmounts == e.Value)
             return;
@@ -165,7 +165,7 @@ public partial class DashboardPage : ContentPage
         return (amountMinor / 100m).ToString("N2", _culture) + " RON";
     }
 
-    private async void OnLoadDemoDataClicked(object sender, EventArgs e)
+    private async void OnLoadDemoDataClicked(object? sender, EventArgs e)
     {
         try
         {
@@ -180,24 +180,24 @@ public partial class DashboardPage : ContentPage
         await LoadDashboardAsync();
     }
 
-    private async void OnSeeAllTapped(object sender, TappedEventArgs e)
+    private async void OnSeeAllTapped(object? sender, TappedEventArgs e)
     {
         await Shell.Current.GoToAsync("//activity");
     }
 
-    private async void OnAddExpenseClicked(object sender, EventArgs e)
+    private async void OnAddExpenseClicked(object? sender, EventArgs e)
     {
         await Shell.Current.GoToAsync(
             $"{nameof(TransactionFormPage)}?type=Expense");
     }
 
-    private async void OnAddIncomeClicked(object sender, EventArgs e)
+    private async void OnAddIncomeClicked(object? sender, EventArgs e)
     {
         await Shell.Current.GoToAsync(
             $"{nameof(TransactionFormPage)}?type=Income");
     }
 
-    private async void OnOpenConverterTapped(object sender, TappedEventArgs e)
+    private async void OnOpenConverterTapped(object? sender, TappedEventArgs e)
     {
         await Shell.Current.GoToAsync(nameof(CurrencyConverterPage));
     }

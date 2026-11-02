@@ -59,12 +59,12 @@ public partial class StatisticsPage : ContentPage
         await LoadStatisticsAsync();
     }
 
-    private async void OnPeriodChanged(object sender, DateChangedEventArgs e)
+    private async void OnPeriodChanged(object? sender, DateChangedEventArgs e)
     {
         await LoadStatisticsAsync();
     }
 
-    private async void OnChartTypeChanged(object sender, EventArgs e)
+    private async void OnChartTypeChanged(object? sender, EventArgs e)
     {
         await LoadStatisticsAsync();
     }

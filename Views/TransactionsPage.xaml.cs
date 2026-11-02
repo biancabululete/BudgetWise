@@ -71,12 +71,12 @@ public partial class TransactionsPage : ContentPage
         }
     }
 
-    private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
+    private void OnSearchTextChanged(object? sender, TextChangedEventArgs e)
     {
         ApplyFilters();
     }
 
-    private void OnFilterChanged(object sender, EventArgs e)
+    private void OnFilterChanged(object? sender, EventArgs e)
     {
         ApplyFilters();
     }
@@ -99,13 +99,13 @@ public partial class TransactionsPage : ContentPage
             CountLabel.Text = $"{Transactions.Count} transactions";
     }
 
-    private async void OnAddTransactionClicked(object sender, EventArgs e)
+    private async void OnAddTransactionClicked(object? sender, EventArgs e)
     {
         await Shell.Current.GoToAsync(
             $"{nameof(TransactionFormPage)}?type=Expense");
     }
 
-    private async void OnEditClicked(object sender, EventArgs e)
+    private async void OnEditClicked(object? sender, EventArgs e)
     {
         if (sender is not Button button || !TryGetTransactionId(button, out int id))
             return;
@@ -114,7 +114,7 @@ public partial class TransactionsPage : ContentPage
             $"{nameof(TransactionFormPage)}?id={id}");
     }
 
-    private async void OnDeleteClicked(object sender, EventArgs e)
+    private async void OnDeleteClicked(object? sender, EventArgs e)
     {
         if (sender is not Button button || !TryGetTransactionId(button, out int id))
             return;

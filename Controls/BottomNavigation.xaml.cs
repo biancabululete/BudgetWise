@@ -44,22 +44,22 @@ public partial class BottomNavigation : ContentView
         text.FontAttributes = FontAttributes.Bold;
     }
 
-    private async void OnHomeTapped(object sender, TappedEventArgs e)
+    private async void OnHomeTapped(object? sender, TappedEventArgs e)
     {
         await NavigateToAsync("home");
     }
 
-    private async void OnActivityTapped(object sender, TappedEventArgs e)
+    private async void OnActivityTapped(object? sender, TappedEventArgs e)
     {
         await NavigateToAsync("activity");
     }
 
-    private async void OnBudgetsTapped(object sender, TappedEventArgs e)
+    private async void OnBudgetsTapped(object? sender, TappedEventArgs e)
     {
         await NavigateToAsync("budgets");
     }
 
-    private async void OnStatsTapped(object sender, TappedEventArgs e)
+    private async void OnStatsTapped(object? sender, TappedEventArgs e)
     {
         await NavigateToAsync("stats");
     }

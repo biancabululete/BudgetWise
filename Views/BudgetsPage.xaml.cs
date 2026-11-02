@@ -113,7 +113,7 @@ public partial class BudgetsPage : ContentPage
         return (minor / 100m).ToString("N2", _culture) + " RON";
     }
 
-    private async void OnPeriodChanged(object sender, DateChangedEventArgs e)
+    private async void OnPeriodChanged(object? sender, DateChangedEventArgs e)
     {
         await LoadBudgetsAsync();
     }
@@ -124,13 +124,13 @@ public partial class BudgetsPage : ContentPage
         return date.ToString("yyyy-MM", CultureInfo.InvariantCulture);
     }
 
-    private async void OnCreateBudgetClicked(object sender, EventArgs e)
+    private async void OnCreateBudgetClicked(object? sender, EventArgs e)
     {
         await Shell.Current.GoToAsync(
             $"{nameof(BudgetFormPage)}?period={SelectedPeriodQuery()}");
     }
 
-    private async void OnEditBudgetClicked(object sender, EventArgs e)
+    private async void OnEditBudgetClicked(object? sender, EventArgs e)
     {
         if (sender is not Button button || !TryGetBudgetId(button, out int id))
             return;
@@ -138,7 +138,7 @@ public partial class BudgetsPage : ContentPage
         await Shell.Current.GoToAsync($"{nameof(BudgetFormPage)}?id={id}");
     }
 
-    private async void OnDeleteBudgetClicked(object sender, EventArgs e)
+    private async void OnDeleteBudgetClicked(object? sender, EventArgs e)
     {
         if (sender is not Button button || !TryGetBudgetId(button, out int id))
             return;
