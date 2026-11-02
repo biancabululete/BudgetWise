@@ -29,6 +29,7 @@ public static class MauiProgram
 				Timeout = TimeSpan.FromSeconds(12)
 			}));
 		builder.Services.AddTransient<CurrencyConverterPage>();
+		builder.Services.AddTransient<SimulatorPage>();
 		builder.Services.AddTransient<DashboardPage>();
 		builder.Services.AddTransient<TransactionsPage>();
 		builder.Services.AddTransient<TransactionFormPage>();

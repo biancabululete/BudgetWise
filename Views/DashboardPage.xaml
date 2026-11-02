@@ -92,6 +92,25 @@
                     </Grid>
                 </Border>
 
+                <Border BackgroundColor="#18251F" Stroke="#050806" StrokeThickness="3"
+                        StrokeShape="Rectangle" Padding="16">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnOpenSimulatorTapped" />
+                    </Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="WHAT-IF SIMULATOR" FontSize="14" FontAttributes="Bold"
+                                   CharacterSpacing="0.5" TextColor="#F2F4EC" />
+                            <Label Text="Test a plan · see your future balance" FontSize="12" TextColor="#A7B4AA" />
+                        </VerticalStackLayout>
+                        <Path Grid.Column="1" Data="M5,12 L19,12 M12,5 L19,12 L12,19"
+                              Stroke="#C9F27A" StrokeThickness="2.5"
+                              StrokeLineCap="Round" StrokeLineJoin="Round"
+                              WidthRequest="20" HeightRequest="20"
+                              VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+
                 <Grid ColumnDefinitions="*,Auto">
                     <Label Text="THIS MONTH" FontSize="19" FontAttributes="Bold" TextColor="#F2F4EC" />
                     <Label Grid.Column="1" Text="BUDGET OVERVIEW" FontSize="11" FontAttributes="Bold" TextColor="#A7B4AA"

@@ -201,6 +201,11 @@ public partial class DashboardPage : ContentPage
     {
         await Shell.Current.GoToAsync(nameof(CurrencyConverterPage));
     }
+
+    private async void OnOpenSimulatorTapped(object? sender, TappedEventArgs e)
+    {
+        await Shell.Current.GoToAsync(nameof(SimulatorPage));
+    }
 }
 
 public class DashboardRecentItem
