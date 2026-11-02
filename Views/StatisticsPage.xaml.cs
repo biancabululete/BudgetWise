@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using System.Globalization;
 using BudgetWise.Graphics;
+using BudgetWise.Models;
 using BudgetWise.Services;
 
 namespace BudgetWise.Views;
@@ -23,10 +24,14 @@ public partial class StatisticsPage : ContentPage
     private readonly CultureInfo _culture = CultureInfo.GetCultureInfo("ro-RO");
     private readonly CategoryDonutDrawable _donutDrawable = new();
     private readonly MonthlyBarsDrawable _barsDrawable = new();
+    private readonly SpendingHeatmapDrawable _heatmapDrawable = new();
+    private List<Transaction> _monthTransactions = new();
+    private Dictionary<int, Category> _categoriesById = new();
     private bool _loading;
     private bool _refreshPending;
 
     public ObservableCollection<CategoryLegendItem> CategoryLegend { get; } = new();
+    public ObservableCollection<DayTransactionItem> DayTransactions { get; } = new();
 
     public StatisticsPage(DatabaseService database)
     {
@@ -36,6 +41,11 @@ public partial class StatisticsPage : ContentPage
         BindingContext = this;
         DonutChart.Drawable = _donutDrawable;
         MonthlyBarsChart.Drawable = _barsDrawable;
+        HeatmapChart.Drawable = _heatmapDrawable;
+        LegendEmpty.Color = SpendingHeatmapDrawable.EmptyDayColor;
+        LegendLow.Color = SpendingHeatmapDrawable.ColorForIntensity(0.1f);
+        LegendMid.Color = SpendingHeatmapDrawable.ColorForIntensity(0.5f);
+        LegendHigh.Color = SpendingHeatmapDrawable.ColorForIntensity(1f);
 
         _loading = true;
         PeriodPicker.Date = DateTime.Today;
@@ -57,6 +67,67 @@ public partial class StatisticsPage : ContentPage
     private async void OnChartTypeChanged(object sender, EventArgs e)
     {
         await LoadStatisticsAsync();
+    }
+
+    private void OnHeatmapTapped(object? sender, TouchEventArgs e)
+    {
+        if (e.Touches.Length == 0)
+            return;
+
+        int day = _heatmapDrawable.HitTest(
+            e.Touches[0].X, e.Touches[0].Y,
+            (float)HeatmapChart.Width, (float)HeatmapChart.Height);
+
+        if (day == 0)
+            return;
+
+        ShowDay(day == _heatmapDrawable.SelectedDay ? 0 : day);
+    }
+
+    private void ShowDay(int day)
+    {
+        _heatmapDrawable.SelectedDay = day;
+        DayTransactions.Clear();
+
+        if (day == 0)
+        {
+            HeatmapDetailLabel.Text = "Tap a day to see its transactions";
+            HeatmapChart.Invalidate();
+            return;
+        }
+
+        var items = _monthTransactions
+            .Where(transaction => transaction.Date.Day == day)
+            .OrderByDescending(transaction => transaction.Id)
+            .ToList();
+
+        DateTime date = new(_heatmapDrawable.Month.Year, _heatmapDrawable.Month.Month, day);
+        string dateText = date.ToString("dd MMM", _culture);
+        long spent = items
+            .Where(transaction => transaction.Type == "Expense")
+            .Sum(transaction => transaction.AmountRonMinor);
+
+        HeatmapDetailLabel.Text = items.Count == 0
+            ? $"{dateText} · no transactions"
+            : $"{dateText} · {items.Count} {(items.Count == 1 ? "transaction" : "transactions")} · spent {FormatMoney(spent)}";
+
+        foreach (var transaction in items)
+        {
+            bool isIncome = transaction.Type == "Income";
+            _categoriesById.TryGetValue(transaction.CategoryId, out Category? category);
+
+            DayTransactions.Add(new DayTransactionItem
+            {
+                Title = string.IsNullOrWhiteSpace(transaction.Description)
+                    ? category?.Name ?? "Other"
+                    : transaction.Description,
+                AmountText = (isIncome ? "+" : "-") + FormatMoney(transaction.AmountRonMinor),
+                AmountColor = Color.FromArgb(isIncome ? "#7CF7E8" : "#F08B8F"),
+                IconSource = CategoryIcons.For(category?.Icon)
+            });
+        }
+
+        HeatmapChart.Invalidate();
     }
 
     private async Task LoadStatisticsAsync()
@@ -96,6 +167,19 @@ public partial class StatisticsPage : ContentPage
             var monthlyTransactions = transactions
                 .Where(transaction => transaction.Date >= monthStart && transaction.Date < monthStart.AddMonths(1))
                 .ToList();
+
+            _monthTransactions = monthlyTransactions;
+            _categoriesById = categories.ToDictionary(category => category.Id);
+            if (_heatmapDrawable.Month != monthStart)
+                _heatmapDrawable.SelectedDay = 0;
+            _heatmapDrawable.Month = monthStart;
+            _heatmapDrawable.DailyExpenses = monthlyTransactions
+                .Where(transaction => transaction.Type == "Expense")
+                .GroupBy(transaction => transaction.Date.Day)
+                .ToDictionary(
+                    group => group.Key,
+                    group => group.Sum(transaction => transaction.AmountRonMinor));
+            ShowDay(_heatmapDrawable.SelectedDay);
 
             long income = monthlyTransactions
                 .Where(transaction => transaction.Type == "Income")
@@ -197,6 +281,14 @@ public partial class StatisticsPage : ContentPage
     {
         return (amountMinor / 100m).ToString("N2", _culture) + " RON";
     }
+}
+
+public sealed class DayTransactionItem
+{
+    public string Title { get; set; } = string.Empty;
+    public string AmountText { get; set; } = string.Empty;
+    public Color AmountColor { get; set; } = Colors.White;
+    public string IconSource { get; set; } = CategoryIcons.Fallback;
 }
 
 public sealed class CategoryLegendItem

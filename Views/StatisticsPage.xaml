@@ -68,6 +68,46 @@
                         StrokeShape="Rectangle" Padding="18">
                     <VerticalStackLayout Spacing="12">
                         <VerticalStackLayout Spacing="3">
+                            <Label Text="SPENDING HEATMAP" FontSize="17" FontAttributes="Bold" TextColor="#F2F4EC" />
+                            <Label Text="Redder days cost more · tap a day for details" FontSize="12" TextColor="#A7B4AA" />
+                        </VerticalStackLayout>
+                        <GraphicsView x:Name="HeatmapChart" HeightRequest="300" HorizontalOptions="Fill"
+                                      EndInteraction="OnHeatmapTapped" />
+                        <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
+                            <Label Text="LESS" FontSize="10" FontAttributes="Bold" TextColor="#A7B4AA" VerticalOptions="Center" />
+                            <BoxView x:Name="LegendEmpty" WidthRequest="14" HeightRequest="14" VerticalOptions="Center" />
+                            <BoxView x:Name="LegendLow" WidthRequest="14" HeightRequest="14" VerticalOptions="Center" />
+                            <BoxView x:Name="LegendMid" WidthRequest="14" HeightRequest="14" VerticalOptions="Center" />
+                            <BoxView x:Name="LegendHigh" WidthRequest="14" HeightRequest="14" VerticalOptions="Center" />
+                            <Label Text="MORE" FontSize="10" FontAttributes="Bold" TextColor="#A7B4AA" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                        <BoxView HeightRequest="2" BackgroundColor="#050806" />
+                        <Label x:Name="HeatmapDetailLabel" Text="Tap a day to see its transactions"
+                               FontSize="13" FontAttributes="Bold" TextColor="#A7B4AA" />
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding DayTransactions}" Spacing="10">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnDefinitions="30,*,Auto" ColumnSpacing="10">
+                                        <Border BackgroundColor="#C9F27A" Stroke="#050806" StrokeThickness="2"
+                                                StrokeShape="Rectangle" WidthRequest="30" HeightRequest="30" Padding="6">
+                                            <Image Source="{Binding IconSource}" />
+                                        </Border>
+                                        <Label Grid.Column="1" Text="{Binding Title}" FontSize="13" TextColor="#F2F4EC"
+                                               VerticalOptions="Center" MaxLines="1" LineBreakMode="TailTruncation" />
+                                        <Label Grid.Column="2" Text="{Binding AmountText}" FontSize="13"
+                                               FontAttributes="Bold" TextColor="{Binding AmountColor}"
+                                               VerticalOptions="Center" />
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border BackgroundColor="#18251F" Stroke="#050806" StrokeThickness="3"
+                        StrokeShape="Rectangle" Padding="18">
+                    <VerticalStackLayout Spacing="12">
+                        <VerticalStackLayout Spacing="3">
                             <Label x:Name="CategoryTitleLabel" Text="SPENDING BY CATEGORY" FontSize="17"
                                    FontAttributes="Bold" TextColor="#F2F4EC" />
                             <Label Text="Selected month · RON" FontSize="12" TextColor="#A7B4AA" />
