@@ -39,6 +39,7 @@ public partial class StatisticsPage : ContentPage
 
         _loading = true;
         PeriodPicker.Date = DateTime.Today;
+        ChartTypePicker.SelectedIndex = 0;
         _loading = false;
     }
 
@@ -49,6 +50,11 @@ public partial class StatisticsPage : ContentPage
     }
 
     private async void OnPeriodChanged(object sender, DateChangedEventArgs e)
+    {
+        await LoadStatisticsAsync();
+    }
+
+    private async void OnChartTypeChanged(object sender, EventArgs e)
     {
         await LoadStatisticsAsync();
     }
@@ -104,8 +110,16 @@ public partial class StatisticsPage : ContentPage
             NetLabel.Text = FormatMoney(net);
             NetLabel.TextColor = Color.FromArgb(net < 0 ? "#D56E75" : "#7CF7E8");
 
+            bool showIncome = ChartTypePicker.SelectedIndex == 1;
+            string chartType = showIncome ? "Income" : "Expense";
+            long chartTotal = showIncome ? income : expenses;
+            CategoryTitleLabel.Text = showIncome ? "INCOME BY CATEGORY" : "SPENDING BY CATEGORY";
+            CategoryEmptyLabel.Text = showIncome
+                ? "NO INCOME FOR THIS MONTH"
+                : "NO EXPENSES FOR THIS MONTH";
+
             var categoryGroups = monthlyTransactions
-                .Where(transaction => transaction.Type == "Expense")
+                .Where(transaction => transaction.Type == chartType)
                 .GroupBy(transaction => transaction.CategoryId)
                 .Select(group => new
                 {
@@ -125,8 +139,8 @@ public partial class StatisticsPage : ContentPage
                 Color color = ChartColors[index % ChartColors.Length];
                 slices.Add(new CategorySlice(name, group.AmountMinor, color));
 
-                decimal percentage = expenses > 0
-                    ? group.AmountMinor * 100m / expenses
+                decimal percentage = chartTotal > 0
+                    ? group.AmountMinor * 100m / chartTotal
                     : 0;
 
                 CategoryLegend.Add(new CategoryLegendItem
@@ -138,6 +152,7 @@ public partial class StatisticsPage : ContentPage
                 });
             }
 
+            _donutDrawable.CenterCaption = showIncome ? "TOTAL INCOME" : "TOTAL EXPENSES";
             _donutDrawable.Slices = slices;
             DonutChart.IsVisible = slices.Count > 0;
             CategoryEmptyLabel.IsVisible = slices.Count == 0;

@@ -12,12 +12,16 @@
         <ScrollView Grid.Row="0" VerticalScrollBarVisibility="Never">
             <VerticalStackLayout Padding="22,24,22,28" Spacing="18"
                                  MaximumWidthRequest="560" HorizontalOptions="Fill">
-                <VerticalStackLayout Spacing="4">
-                    <Label Text="THE BIG PICTURE" FontSize="11" FontAttributes="Bold"
-                           CharacterSpacing="2" TextColor="#C9F27A" />
-                    <Label Text="STATISTICS" FontSize="28" FontAttributes="Bold" TextColor="#F2F4EC" />
-                    <Label Text="Real insights from your transactions" FontSize="13" TextColor="#A7B4AA" />
-                </VerticalStackLayout>
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="THE BIG PICTURE" FontSize="11" FontAttributes="Bold"
+                               CharacterSpacing="2" TextColor="#C9F27A" />
+                        <Label Text="STATISTICS" FontSize="28" FontAttributes="Bold" TextColor="#F2F4EC" />
+                        <Label Text="Real insights from your transactions" FontSize="13" TextColor="#A7B4AA" />
+                    </VerticalStackLayout>
+                    <Image Grid.Column="1" Source="bw_logo" WidthRequest="46" HeightRequest="46"
+                           VerticalOptions="Start" SemanticProperties.Description="BudgetWise logo" />
+                </Grid>
 
                 <Border BackgroundColor="#18251F" Stroke="#050806" StrokeThickness="3"
                         StrokeShape="Rectangle" Padding="14,4">
@@ -64,9 +68,23 @@
                         StrokeShape="Rectangle" Padding="18">
                     <VerticalStackLayout Spacing="12">
                         <VerticalStackLayout Spacing="3">
-                            <Label Text="SPENDING BY CATEGORY" FontSize="17" FontAttributes="Bold" TextColor="#F2F4EC" />
+                            <Label x:Name="CategoryTitleLabel" Text="SPENDING BY CATEGORY" FontSize="17"
+                                   FontAttributes="Bold" TextColor="#F2F4EC" />
                             <Label Text="Selected month · RON" FontSize="12" TextColor="#A7B4AA" />
                         </VerticalStackLayout>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="SHOW" FontSize="11" FontAttributes="Bold" CharacterSpacing="1"
+                                   TextColor="#A7B4AA" VerticalOptions="Center" />
+                            <Picker x:Name="ChartTypePicker" Grid.Column="1" TextColor="#C9F27A"
+                                    TitleColor="#A7B4AA" SelectedIndexChanged="OnChartTypeChanged">
+                                <Picker.ItemsSource>
+                                    <x:Array Type="{x:Type x:String}">
+                                        <x:String>Expenses</x:String>
+                                        <x:String>Income</x:String>
+                                    </x:Array>
+                                </Picker.ItemsSource>
+                            </Picker>
+                        </Grid>
                         <GraphicsView x:Name="DonutChart" HeightRequest="220" HorizontalOptions="Fill" />
                         <Label x:Name="CategoryEmptyLabel" Text="NO EXPENSES FOR THIS MONTH"
                                FontSize="12" FontAttributes="Bold" TextColor="#A7B4AA"

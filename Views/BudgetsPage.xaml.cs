@@ -40,6 +40,7 @@ public partial class BudgetsPage : ContentPage
             var categories = await _database.GetCategoriesAsync();
             var transactions = await _database.GetTransactionsAsync();
             var categoryNames = categories.ToDictionary(category => category.Id, category => category.Name);
+            var categoryIcons = categories.ToDictionary(category => category.Id, category => category.Icon);
             var monthlyExpenses = transactions
                 .Where(transaction =>
                     transaction.Type == "Expense" &&
@@ -66,6 +67,7 @@ public partial class BudgetsPage : ContentPage
                 {
                     Id = budget.Id,
                     CategoryName = categoryNames.GetValueOrDefault(budget.CategoryId, "Other"),
+                    IconSource = CategoryIcons.For(categoryIcons.GetValueOrDefault(budget.CategoryId)),
                     SpentText = $"{FormatMoney(spent)} spent / {FormatMoney(budget.LimitMinor)} limit",
                     RemainingText = exceeded
                         ? $"{FormatMoney(-remaining)} over budget"
@@ -182,6 +184,7 @@ public class BudgetListItem
 {
     public int Id { get; set; }
     public string CategoryName { get; set; } = string.Empty;
+    public string IconSource { get; set; } = CategoryIcons.Fallback;
     public string SpentText { get; set; } = string.Empty;
     public string RemainingText { get; set; } = string.Empty;
     public string PercentageText { get; set; } = string.Empty;

@@ -20,12 +20,8 @@
                         <Label Text="Overview" FontSize="29" FontAttributes="Bold" TextColor="#F2F4EC" />
                         <Label Text="Your money, at a glance" FontSize="13" TextColor="#A7B4AA" />
                     </VerticalStackLayout>
-                    <Border Grid.Column="1" BackgroundColor="#20352C" Stroke="#050806"
-                            StrokeThickness="3" StrokeShape="Rectangle"
-                            WidthRequest="46" HeightRequest="46">
-                        <Label Text="BW" FontSize="13" FontAttributes="Bold" TextColor="#C9F27A"
-                               HorizontalOptions="Center" VerticalOptions="Center" />
-                    </Border>
+                    <Image Grid.Column="1" Source="bw_logo" WidthRequest="46" HeightRequest="46"
+                           SemanticProperties.Description="BudgetWise logo" />
                 </Grid>
 
                 <Border BackgroundColor="#20352C" Stroke="#050806" StrokeThickness="3"
@@ -56,6 +52,16 @@
                             </VerticalStackLayout>
                         </Grid>
                     </VerticalStackLayout>
+                </Border>
+
+                <Border BackgroundColor="#18251F" Stroke="#050806" StrokeThickness="3"
+                        StrokeShape="Rectangle" Padding="16,6">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                        <Label Text="HIDE AMOUNTS" FontSize="12" FontAttributes="Bold"
+                               CharacterSpacing="1" TextColor="#A7B4AA" VerticalOptions="Center" />
+                        <Switch x:Name="HideAmountsSwitch" Grid.Column="1" OnColor="#C9F27A"
+                                ThumbColor="#F2F4EC" Toggled="OnHideAmountsToggled" />
+                    </Grid>
                 </Border>
 
                 <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
@@ -132,14 +138,19 @@
                     <VerticalStackLayout Spacing="14">
                         <Label x:Name="NoTransactionsLabel" Text="NO TRANSACTIONS YET" FontSize="14"
                                FontAttributes="Bold" TextColor="#A7B4AA" HorizontalTextAlignment="Center" IsVisible="True" />
+                        <Button x:Name="DemoDataButton" Text="LOAD DEMO DATA" FontSize="13" FontAttributes="Bold"
+                                BackgroundColor="#20352C" TextColor="#C9F27A" BorderColor="#050806" BorderWidth="3"
+                                CornerRadius="0" HeightRequest="46" Clicked="OnLoadDemoDataClicked" />
                         <VerticalStackLayout BindableLayout.ItemsSource="{Binding RecentTransactions}" Spacing="14">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate>
                                     <Grid ColumnDefinitions="42,*" ColumnSpacing="12">
                                         <Border BackgroundColor="{Binding TypeColor}" Stroke="#050806"
                                                 StrokeThickness="2" StrokeShape="Rectangle"
-                                                WidthRequest="42" HeightRequest="42"
-                                                HorizontalOptions="Center" VerticalOptions="Center" />
+                                                WidthRequest="42" HeightRequest="42" Padding="9"
+                                                HorizontalOptions="Center" VerticalOptions="Center">
+                                            <Image Source="{Binding IconSource}" />
+                                        </Border>
                                         <VerticalStackLayout Grid.Column="1" Spacing="4">
                                             <Label Text="{Binding Title}" FontSize="14" FontAttributes="Bold"
                                                    TextColor="#F2F4EC" MaxLines="1" LineBreakMode="TailTruncation" />

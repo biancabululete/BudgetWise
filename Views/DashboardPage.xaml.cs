@@ -9,6 +9,7 @@ public partial class DashboardPage : ContentPage
     private readonly DatabaseService _database;
     private readonly CultureInfo _culture = CultureInfo.GetCultureInfo("ro-RO");
     private bool _loading;
+    private bool _hideAmounts;
 
     public ObservableCollection<DashboardRecentItem> RecentTransactions { get; } = new();
 
@@ -18,6 +19,19 @@ public partial class DashboardPage : ContentPage
 
         _database = database;
         BindingContext = this;
+
+        _hideAmounts = Preferences.Default.Get("hide_amounts", false);
+        HideAmountsSwitch.IsToggled = _hideAmounts;
+    }
+
+    private async void OnHideAmountsToggled(object sender, ToggledEventArgs e)
+    {
+        if (_hideAmounts == e.Value)
+            return;
+
+        _hideAmounts = e.Value;
+        Preferences.Default.Set("hide_amounts", _hideAmounts);
+        await LoadDashboardAsync();
     }
 
     protected override async void OnAppearing()
@@ -46,7 +60,7 @@ public partial class DashboardPage : ContentPage
                 .Sum(transaction => transaction.AmountRonMinor);
             long balance = totalIncome - totalExpenses;
 
-            BalanceLabel.Text = FormatMoney(balance);
+            BalanceLabel.Text = Visible(FormatMoney(balance));
             BalanceLabel.TextColor = Color.FromArgb(balance < 0 ? "#F08B8F" : "#F2F4EC");
 
             var monthlyTransactions = transactions
@@ -62,8 +76,8 @@ public partial class DashboardPage : ContentPage
                 .Where(transaction => transaction.Type == "Expense")
                 .Sum(transaction => transaction.AmountRonMinor);
 
-            IncomeLabel.Text = "+" + FormatMoney(monthlyIncome);
-            ExpensesLabel.Text = "-" + FormatMoney(monthlyExpenses);
+            IncomeLabel.Text = Visible("+" + FormatMoney(monthlyIncome));
+            ExpensesLabel.Text = Visible("-" + FormatMoney(monthlyExpenses));
 
             if (monthlyIncome > 0)
             {
@@ -107,6 +121,7 @@ public partial class DashboardPage : ContentPage
             }
 
             var categoryLookup = categories.ToDictionary(category => category.Id, category => category.Name);
+            var iconLookup = categories.ToDictionary(category => category.Id, category => category.Icon);
             RecentTransactions.Clear();
 
             foreach (var transaction in transactions
@@ -125,11 +140,13 @@ public partial class DashboardPage : ContentPage
                     Subtitle = $"{categoryName} · {transaction.Date.ToString("dd MMM yyyy", _culture)}",
                     AmountText = (isIncome ? "+" : "-") + FormatMoney(transaction.AmountRonMinor),
                     AmountColor = Color.FromArgb(isIncome ? "#7CF7E8" : "#F08B8F"),
-                    TypeColor = Color.FromArgb(isIncome ? "#7CF7E8" : "#D56E75")
+                    TypeColor = Color.FromArgb(isIncome ? "#7CF7E8" : "#D56E75"),
+                    IconSource = CategoryIcons.For(iconLookup.GetValueOrDefault(transaction.CategoryId))
                 });
             }
 
             NoTransactionsLabel.IsVisible = RecentTransactions.Count == 0;
+            DemoDataButton.IsVisible = RecentTransactions.Count == 0;
         }
         catch (Exception ex)
         {
@@ -141,9 +158,26 @@ public partial class DashboardPage : ContentPage
         }
     }
 
+    private string Visible(string text) => _hideAmounts ? "•••••" : text;
+
     private string FormatMoney(long amountMinor)
     {
         return (amountMinor / 100m).ToString("N2", _culture) + " RON";
+    }
+
+    private async void OnLoadDemoDataClicked(object sender, EventArgs e)
+    {
+        try
+        {
+            await _database.SeedDemoDataAsync();
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlertAsync("Demo data error", ex.Message, "OK");
+            return;
+        }
+
+        await LoadDashboardAsync();
     }
 
     private async void OnSeeAllTapped(object sender, TappedEventArgs e)
@@ -176,4 +210,5 @@ public class DashboardRecentItem
     public string AmountText { get; set; } = string.Empty;
     public Color AmountColor { get; set; } = Color.FromArgb("#F2F4EC");
     public Color TypeColor { get; set; } = Color.FromArgb("#D56E75");
+    public string IconSource { get; set; } = CategoryIcons.Fallback;
 }

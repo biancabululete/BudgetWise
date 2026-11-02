@@ -47,6 +47,8 @@
                         VerticalScrollBarVisibility="Never">
             <CollectionView.EmptyView>
                 <VerticalStackLayout Padding="20,60" Spacing="12" HorizontalOptions="Center">
+                    <Image Source="empty_wallet" WidthRequest="96" HeightRequest="96"
+                           SemanticProperties.Description="Empty wallet" />
                     <Label Text="NO TRANSACTIONS FOUND" FontSize="19" FontAttributes="Bold"
                            TextColor="#F2F4EC" HorizontalTextAlignment="Center" />
                     <Label Text="Add a transaction or change your filters." FontSize="13"
@@ -62,8 +64,10 @@
                             <Grid ColumnDefinitions="44,*" ColumnSpacing="12">
                                 <Border BackgroundColor="{Binding TypeColor}" Stroke="#050806"
                                         StrokeThickness="2" StrokeShape="Rectangle"
-                                        WidthRequest="42" HeightRequest="42"
-                                        HorizontalOptions="Center" VerticalOptions="Center" />
+                                        WidthRequest="42" HeightRequest="42" Padding="9"
+                                        HorizontalOptions="Center" VerticalOptions="Center">
+                                    <Image Source="{Binding IconSource}" />
+                                </Border>
                                 <VerticalStackLayout Grid.Column="1" Spacing="5">
                                     <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="15"
                                            TextColor="#F2F4EC" MaxLines="1" LineBreakMode="TailTruncation" />

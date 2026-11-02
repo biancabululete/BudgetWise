@@ -37,6 +37,7 @@ public partial class TransactionsPage : ContentPage
             var transactions = await _database.GetTransactionsAsync();
             var categories = await _database.GetCategoriesAsync();
             var categoryLookup = categories.ToDictionary(category => category.Id, category => category.Name);
+            var iconLookup = categories.ToDictionary(category => category.Id, category => category.Icon);
             var culture = CultureInfo.GetCultureInfo("ro-RO");
 
             _allItems.Clear();
@@ -57,7 +58,8 @@ public partial class TransactionsPage : ContentPage
                     Type = transaction.Type,
                     AmountText = $"{(isIncome ? "+" : "-")}{amount.ToString("N2", culture)} {transaction.Currency}",
                     AmountColor = Color.FromArgb(isIncome ? "#7CF7E8" : "#F08B8F"),
-                    TypeColor = Color.FromArgb(isIncome ? "#7CF7E8" : "#D56E75")
+                    TypeColor = Color.FromArgb(isIncome ? "#7CF7E8" : "#D56E75"),
+                    IconSource = CategoryIcons.For(iconLookup.GetValueOrDefault(transaction.CategoryId))
                 });
             }
 
@@ -162,4 +164,5 @@ public class TransactionListItem
     public string AmountText { get; set; } = string.Empty;
     public Color AmountColor { get; set; } = Color.FromArgb("#F2F4EC");
     public Color TypeColor { get; set; } = Color.FromArgb("#D56E75");
+    public string IconSource { get; set; } = CategoryIcons.Fallback;
 }

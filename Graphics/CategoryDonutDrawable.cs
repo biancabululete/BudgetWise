@@ -13,6 +13,8 @@ public sealed class CategoryDonutDrawable : IDrawable
 
     public IReadOnlyList<CategorySlice> Slices { get; set; } = Array.Empty<CategorySlice>();
 
+    public string CenterCaption { get; set; } = "TOTAL EXPENSES";
+
     public void Draw(ICanvas canvas, RectF rect)
     {
         float size = Math.Min(rect.Width - 24, rect.Height - 24);
@@ -85,7 +87,7 @@ public sealed class CategoryDonutDrawable : IDrawable
         canvas.Font = Microsoft.Maui.Graphics.Font.Default;
         canvas.FontColor = MutedText;
         canvas.FontSize = 11;
-        canvas.DrawString("TOTAL CHELTUIT", innerX, rect.Center.Y - 19, innerSize, 18,
+        canvas.DrawString(CenterCaption, innerX, rect.Center.Y - 19, innerSize, 18,
             HorizontalAlignment.Center, VerticalAlignment.Center);
 
         canvas.Font = Microsoft.Maui.Graphics.Font.DefaultBold;

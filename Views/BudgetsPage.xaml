@@ -62,7 +62,9 @@
         <CollectionView Grid.Row="1" Margin="20,0,20,0" ItemsSource="{Binding Budgets}"
                         SelectionMode="None" VerticalScrollBarVisibility="Never">
             <CollectionView.EmptyView>
-                <VerticalStackLayout Padding="20,50" Spacing="10">
+                <VerticalStackLayout Padding="20,50" Spacing="10" HorizontalOptions="Center">
+                    <Image Source="empty_wallet" WidthRequest="96" HeightRequest="96"
+                           SemanticProperties.Description="Empty wallet" />
                     <Label Text="NO BUDGETS YET" FontSize="19" FontAttributes="Bold"
                            TextColor="#F2F4EC" HorizontalTextAlignment="Center" />
                     <Label Text="Create a budget to start tracking your expenses."
@@ -75,10 +77,15 @@
                     <Border BackgroundColor="#18251F" Stroke="#050806" StrokeThickness="3"
                             StrokeShape="Rectangle" Padding="17" Margin="0,0,0,12">
                         <VerticalStackLayout Spacing="13">
-                            <Grid ColumnDefinitions="*,Auto">
-                                <Label Text="{Binding CategoryName}" FontSize="17" FontAttributes="Bold"
-                                       TextColor="#F2F4EC" />
-                                <Label Grid.Column="1" Text="{Binding PercentageText}" FontSize="13"
+                            <Grid ColumnDefinitions="36,*,Auto" ColumnSpacing="12">
+                                <Border BackgroundColor="{Binding StatusColor}" Stroke="#050806"
+                                        StrokeThickness="2" StrokeShape="Rectangle"
+                                        WidthRequest="36" HeightRequest="36" Padding="7">
+                                    <Image Source="{Binding IconSource}" />
+                                </Border>
+                                <Label Grid.Column="1" Text="{Binding CategoryName}" FontSize="17"
+                                       FontAttributes="Bold" TextColor="#F2F4EC" VerticalOptions="Center" />
+                                <Label Grid.Column="2" Text="{Binding PercentageText}" FontSize="13"
                                        FontAttributes="Bold" TextColor="{Binding StatusColor}" />
                             </Grid>
                             <Label Text="{Binding SpentText}" FontSize="14" TextColor="#A7B4AA" />
