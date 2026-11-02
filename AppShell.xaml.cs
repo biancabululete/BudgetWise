@@ -23,5 +23,9 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(
             nameof(SimulatorPage),
             typeof(SimulatorPage));
+
+        Routing.RegisterRoute(
+            nameof(WrappedPage),
+            typeof(WrappedPage));
     }
 }

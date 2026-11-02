@@ -92,6 +92,25 @@
                     </Grid>
                 </Border>
 
+                <Border BackgroundColor="#C9F27A" Stroke="#050806" StrokeThickness="3"
+                        StrokeShape="Rectangle" Padding="16">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnOpenWrappedTapped" />
+                    </Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="BUDGETWISE WRAPPED" FontSize="14" FontAttributes="Bold"
+                                   CharacterSpacing="0.5" TextColor="#101713" />
+                            <Label Text="Your month, told as a story" FontSize="12" TextColor="#20352C" />
+                        </VerticalStackLayout>
+                        <Path Grid.Column="1" Data="M5,12 L19,12 M12,5 L19,12 L12,19"
+                              Stroke="#101713" StrokeThickness="2.5"
+                              StrokeLineCap="Round" StrokeLineJoin="Round"
+                              WidthRequest="20" HeightRequest="20"
+                              VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+
                 <Border BackgroundColor="#18251F" Stroke="#050806" StrokeThickness="3"
                         StrokeShape="Rectangle" Padding="16">
                     <Border.GestureRecognizers>
