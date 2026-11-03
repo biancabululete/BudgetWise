@@ -54,6 +54,7 @@ public partial class WrappedPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+        SetDarkSystemBarIcons(false);
         if (_loaded)
             return;
 
@@ -89,6 +90,25 @@ public partial class WrappedPage : ContentPage
         {
             await DisplayAlertAsync("Wrapped error", ex.Message, "OK");
         }
+    }
+
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        SetDarkSystemBarIcons(true);
+    }
+
+    // The rest of the app is light, so the Android status bar uses dark icons; Wrapped is dark, so it needs light ones.
+    private static void SetDarkSystemBarIcons(bool dark)
+    {
+#if ANDROID
+        if (Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Window is { } window &&
+            AndroidX.Core.View.WindowCompat.GetInsetsController(window, window.DecorView) is { } controller)
+        {
+            controller.AppearanceLightStatusBars = dark;
+            controller.AppearanceLightNavigationBars = dark;
+        }
+#endif
     }
 
     private async void OnMonthChanged(object? sender, EventArgs e)
