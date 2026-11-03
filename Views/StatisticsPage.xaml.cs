@@ -8,17 +8,7 @@ namespace BudgetWise.Views;
 
 public partial class StatisticsPage : ContentPage
 {
-    private static readonly Color[] ChartColors =
-    {
-        Color.FromArgb("#C9F27A"),
-        Color.FromArgb("#7CF7E8"),
-        Color.FromArgb("#D56E75"),
-        Color.FromArgb("#8CA98A"),
-        Color.FromArgb("#73A7CB"),
-        Color.FromArgb("#C0A0EF"),
-        Color.FromArgb("#F2B982"),
-        Color.FromArgb("#E58F9A")
-    };
+    private static readonly Color[] ChartColors = Palette.Chart;
 
     private readonly DatabaseService _database;
     private readonly CultureInfo _culture = CultureInfo.GetCultureInfo("ro-RO");
@@ -122,7 +112,7 @@ public partial class StatisticsPage : ContentPage
                     ? category?.Name ?? "Other"
                     : transaction.Description,
                 AmountText = (isIncome ? "+" : "-") + FormatMoney(transaction.AmountRonMinor),
-                AmountColor = Color.FromArgb(isIncome ? "#7CF7E8" : "#F08B8F"),
+                AmountColor = isIncome ? Palette.IncomeText : Palette.ExpenseText,
                 IconSource = CategoryIcons.For(category?.Icon)
             });
         }
@@ -192,7 +182,7 @@ public partial class StatisticsPage : ContentPage
             IncomeLabel.Text = FormatMoney(income);
             ExpensesLabel.Text = FormatMoney(expenses);
             NetLabel.Text = FormatMoney(net);
-            NetLabel.TextColor = Color.FromArgb(net < 0 ? "#D56E75" : "#7CF7E8");
+            NetLabel.TextColor = net < 0 ? Palette.ExpenseText : Palette.IncomeText;
 
             bool showIncome = ChartTypePicker.SelectedIndex == 1;
             string chartType = showIncome ? "Income" : "Expense";

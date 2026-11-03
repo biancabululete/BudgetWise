@@ -99,7 +99,7 @@ public partial class SimulatorPage : ContentPage
             AvgExpensesLabel.Text = Money(_averageExpenses);
             decimal saved = _averageIncome - _averageExpenses;
             AvgSavedLabel.Text = Money(saved);
-            AvgSavedLabel.TextColor = Color.FromArgb(saved < 0 ? "#F08B8F" : "#C9F27A");
+            AvgSavedLabel.TextColor = saved < 0 ? Palette.ExpenseText : Palette.PrimaryText;
 
             Recalculate();
         }
@@ -155,7 +155,7 @@ public partial class SimulatorPage : ContentPage
         DifferenceLabel.Text = difference >= 0
             ? $"+{Money(difference)} more after {months} {(months == 1 ? "month" : "months")}"
             : $"{Money(difference)} less after {months} {(months == 1 ? "month" : "months")}";
-        DifferenceLabel.TextColor = Color.FromArgb(difference >= 0 ? "#7CF7E8" : "#F08B8F");
+        DifferenceLabel.TextColor = difference >= 0 ? Palette.IncomeText : Palette.ExpenseText;
         MonthlyLabel.Text = $"Saving {Money(scenarioMonthly)} per month instead of {Money(baselineMonthly)}.";
     }
 

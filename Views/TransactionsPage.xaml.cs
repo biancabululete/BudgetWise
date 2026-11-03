@@ -57,8 +57,8 @@ public partial class TransactionsPage : ContentPage
                     Subtitle = $"{categoryName} · {transaction.Date.ToString("dd MMM yyyy", culture)}",
                     Type = transaction.Type,
                     AmountText = $"{(isIncome ? "+" : "-")}{amount.ToString("N2", culture)} {transaction.Currency}",
-                    AmountColor = Color.FromArgb(isIncome ? "#7CF7E8" : "#F08B8F"),
-                    TypeColor = Color.FromArgb(isIncome ? "#7CF7E8" : "#D56E75"),
+                    AmountColor = isIncome ? Palette.IncomeText : Palette.ExpenseText,
+                    TypeColor = isIncome ? Palette.Income : Palette.Expense,
                     IconSource = CategoryIcons.For(iconLookup.GetValueOrDefault(transaction.CategoryId))
                 });
             }
@@ -162,7 +162,7 @@ public class TransactionListItem
     public string Subtitle { get; set; } = string.Empty;
     public string Type { get; set; } = string.Empty;
     public string AmountText { get; set; } = string.Empty;
-    public Color AmountColor { get; set; } = Color.FromArgb("#F2F4EC");
-    public Color TypeColor { get; set; } = Color.FromArgb("#D56E75");
+    public Color AmountColor { get; set; } = Palette.Text;
+    public Color TypeColor { get; set; } = Palette.Expense;
     public string IconSource { get; set; } = CategoryIcons.Fallback;
 }

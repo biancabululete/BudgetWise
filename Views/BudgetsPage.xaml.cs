@@ -75,7 +75,7 @@ public partial class BudgetsPage : ContentPage
                     PercentageText = usage.ToString("P0", _culture),
                     Progress = Math.Clamp((double)usage, 0.0, 1.0),
                     StatusText = exceeded ? "BUDGET EXCEEDED" : "ON TRACK",
-                    StatusColor = Color.FromArgb(exceeded ? "#F08B8F" : "#C9F27A")
+                    StatusColor = exceeded ? Palette.ExpenseText : Palette.PrimaryText
                 });
             }
 
@@ -90,7 +90,7 @@ public partial class BudgetsPage : ContentPage
                 RemainingLabel.Text = remaining >= 0
                     ? $"{FormatMoney(remaining)} available to spend"
                     : $"{FormatMoney(-remaining)} over budget";
-                OverallProgress.ProgressColor = Color.FromArgb(remaining < 0 ? "#F08B8F" : "#C9F27A");
+                OverallProgress.ProgressColor = remaining < 0 ? Palette.ExpenseText : Palette.PrimaryText;
             }
             else
             {
@@ -190,5 +190,5 @@ public class BudgetListItem
     public string PercentageText { get; set; } = string.Empty;
     public double Progress { get; set; }
     public string StatusText { get; set; } = string.Empty;
-    public Color StatusColor { get; set; } = Color.FromArgb("#C9F27A");
+    public Color StatusColor { get; set; } = Palette.PrimaryText;
 }

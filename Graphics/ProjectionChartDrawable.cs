@@ -1,3 +1,4 @@
+using BudgetWise.Services;
 using System.Globalization;
 using Microsoft.Maui.Graphics;
 
@@ -11,10 +12,10 @@ public sealed class ProjectionChartDrawable : IDrawable
     private const float Top = 14f;
     private const float Bottom = 28f;
 
-    private static readonly Color GridColor = Color.FromArgb("#2A3B31");
-    private static readonly Color MutedText = Color.FromArgb("#A7B4AA");
-    private static readonly Color BaselineColor = Color.FromArgb("#A7B4AA");
-    private static readonly Color ScenarioColor = Color.FromArgb("#C9F27A");
+    private static readonly Color GridColor = Palette.Grid;
+    private static readonly Color MutedText = Palette.Muted;
+    private static readonly Color BaselineColor = Palette.Muted;
+    private static readonly Color ScenarioColor = Palette.PrimaryText;
 
     public static Color Baseline => BaselineColor;
     public static Color Scenario => ScenarioColor;

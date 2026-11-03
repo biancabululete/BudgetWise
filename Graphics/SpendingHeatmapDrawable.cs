@@ -1,3 +1,4 @@
+using BudgetWise.Services;
 using Microsoft.Maui.Graphics;
 
 namespace BudgetWise.Graphics;
@@ -9,13 +10,11 @@ public sealed class SpendingHeatmapDrawable : IDrawable
     private const float HeaderHeight = 22f;
 
     private static readonly string[] Weekdays = { "M", "T", "W", "T", "F", "S", "S" };
-    private static readonly Color EmptyDay = Color.FromArgb("#243329");
-    private static readonly Color LowSpend = Color.FromArgb("#3E6B4F");
-    private static readonly Color HighSpend = Color.FromArgb("#D56E75");
-    private static readonly Color MutedText = Color.FromArgb("#A7B4AA");
-    private static readonly Color MainText = Color.FromArgb("#F2F4EC");
-    private static readonly Color DarkText = Color.FromArgb("#101713");
-    private static readonly Color SelectedBorder = Color.FromArgb("#C9F27A");
+    private static readonly Color EmptyDay = Palette.HeatEmpty;
+    private static readonly Color MutedText = Palette.Muted;
+    private static readonly Color MainText = Palette.Text;
+    private static readonly Color DarkText = Palette.OnPrimary;
+    private static readonly Color SelectedBorder = Palette.Border;
 
     public DateTime Month { get; set; } = new(DateTime.Today.Year, DateTime.Today.Month, 1);
 
@@ -28,10 +27,17 @@ public sealed class SpendingHeatmapDrawable : IDrawable
     public static Color ColorForIntensity(float intensity)
     {
         float t = Math.Clamp(intensity, 0f, 1f);
+        return t < 0.5f
+            ? Blend(Palette.Primary, Palette.Butter, t * 2)
+            : Blend(Palette.Butter, Palette.Expense, (t - 0.5f) * 2);
+    }
+
+    private static Color Blend(Color from, Color to, float amount)
+    {
         return new Color(
-            LowSpend.Red + (HighSpend.Red - LowSpend.Red) * t,
-            LowSpend.Green + (HighSpend.Green - LowSpend.Green) * t,
-            LowSpend.Blue + (HighSpend.Blue - LowSpend.Blue) * t);
+            from.Red + (to.Red - from.Red) * amount,
+            from.Green + (to.Green - from.Green) * amount,
+            from.Blue + (to.Blue - from.Blue) * amount);
     }
 
     public static Color EmptyDayColor => EmptyDay;
@@ -71,7 +77,7 @@ public sealed class SpendingHeatmapDrawable : IDrawable
             }
 
             canvas.Font = Microsoft.Maui.Graphics.Font.Default;
-            canvas.FontColor = spent > 0 && intensity > 0.6f ? DarkText : MainText;
+            canvas.FontColor = spent > 0 ? DarkText : MutedText;
             canvas.FontSize = 12;
             canvas.DrawString(day.ToString(), cell.X, cell.Y, cell.Width, cell.Height,
                 HorizontalAlignment.Center, VerticalAlignment.Center);

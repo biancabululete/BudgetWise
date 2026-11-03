@@ -61,7 +61,7 @@ public partial class DashboardPage : ContentPage
             long balance = totalIncome - totalExpenses;
 
             BalanceLabel.Text = Visible(FormatMoney(balance));
-            BalanceLabel.TextColor = Color.FromArgb(balance < 0 ? "#F08B8F" : "#F2F4EC");
+            BalanceLabel.TextColor = balance < 0 ? Palette.ExpenseText : Palette.Text;
 
             var monthlyTransactions = transactions
                 .Where(transaction =>
@@ -83,12 +83,12 @@ public partial class DashboardPage : ContentPage
             {
                 decimal savingsRate = (monthlyIncome - monthlyExpenses) * 100m / monthlyIncome;
                 SavingsRateLabel.Text = savingsRate.ToString("0.#", _culture) + "%";
-                SavingsRateLabel.TextColor = Color.FromArgb(savingsRate >= 0 ? "#7CF7E8" : "#F08B8F");
+                SavingsRateLabel.TextColor = savingsRate >= 0 ? Palette.IncomeText : Palette.ExpenseText;
             }
             else
             {
                 SavingsRateLabel.Text = "—";
-                SavingsRateLabel.TextColor = Color.FromArgb("#7CF7E8");
+                SavingsRateLabel.TextColor = Palette.IncomeText;
             }
 
             var budgets = await _database.GetBudgetsAsync(now.Month, now.Year);
@@ -139,8 +139,8 @@ public partial class DashboardPage : ContentPage
                         : transaction.Description,
                     Subtitle = $"{categoryName} · {transaction.Date.ToString("dd MMM yyyy", _culture)}",
                     AmountText = (isIncome ? "+" : "-") + FormatMoney(transaction.AmountRonMinor),
-                    AmountColor = Color.FromArgb(isIncome ? "#7CF7E8" : "#F08B8F"),
-                    TypeColor = Color.FromArgb(isIncome ? "#7CF7E8" : "#D56E75"),
+                    AmountColor = isIncome ? Palette.IncomeText : Palette.ExpenseText,
+                    TypeColor = isIncome ? Palette.Income : Palette.Expense,
                     IconSource = CategoryIcons.For(iconLookup.GetValueOrDefault(transaction.CategoryId))
                 });
             }
@@ -218,7 +218,7 @@ public class DashboardRecentItem
     public string Title { get; set; } = string.Empty;
     public string Subtitle { get; set; } = string.Empty;
     public string AmountText { get; set; } = string.Empty;
-    public Color AmountColor { get; set; } = Color.FromArgb("#F2F4EC");
-    public Color TypeColor { get; set; } = Color.FromArgb("#D56E75");
+    public Color AmountColor { get; set; } = Palette.Text;
+    public Color TypeColor { get; set; } = Palette.Expense;
     public string IconSource { get; set; } = CategoryIcons.Fallback;
 }
